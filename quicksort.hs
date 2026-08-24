@@ -3,7 +3,7 @@ import Data.List (partition)
 quicksort :: Ord a => [a] -> [a]
 quicksort [] = []
 quicksort (x:xs) = (quicksort lhs) ++ [x] ++ (quicksort rhs)
-    where (lhs, rhs) = partition (\e -> e < x) xs
+    where (lhs, rhs) = partition (<x) xs
 
 main :: IO ()
 main = do
