@@ -10,7 +10,7 @@ digitsOfInt n
 -- 2n-digit and divisible by (1+10^n) 
 isInvalidId :: Integer -> Bool
 isInvalidId n
-    | even digits = 0 == mod n $ 1 + 10 ^ (digits `div` 2)
+    | even digits = 0 == mod n (1 + 10 ^ (div digits 2))
     | otherwise = False
         where digits = digitsOfInt n
 
