@@ -5,9 +5,9 @@ trimUntilFirstDigit :: String -> Maybe String
 trimUntilFirstDigit [] = Nothing
 trimUntilFirstDigit [_] = Nothing
 trimUntilFirstDigit [x, y] = Just [x, y]
-trimUntilFirstDigit (x:xs) = case trimUntilFirstDigit xs of
-    Just (y:ys) -> Just $ if x >= y then (x:xs) else (y:ys)
-    otherweise -> Nothing
+trimUntilFirstDigit (x:xs) = do
+    (y:ys) <- trimUntilFirstDigit xs
+    Just $ if x >= y then (x:xs) else (y:ys)
 
 maxWithCandidate :: Ord a => a -> [a] -> a
 maxWithCandidate candidate [] = candidate
