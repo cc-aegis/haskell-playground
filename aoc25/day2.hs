@@ -9,8 +9,10 @@ digitsOfInt n
 
 -- 2n-digit and divisible by (1+10^n) 
 isInvalidId :: Integer -> Bool
-isInvalidId n = (even digits) && (0 == mod n (1 + 10 ^ (div digits 2))) -- TODO: guards instead of &&
-    where digits = digitsOfInt n
+isInvalidId n
+    | even digits = 0 == mod n $ 1 + 10 ^ (digits `div` 2)
+    | otherwise = False
+        where digits = digitsOfInt n
 
 invalidIdsInRange :: (Integer, Integer) -> [Integer]
 invalidIdsInRange (start, end)
