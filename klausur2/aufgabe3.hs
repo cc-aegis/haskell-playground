@@ -35,6 +35,8 @@ vereinfache Falsch = Falsch
 vereinfache (Var name) = Var name
 vereinfache (Nicht formel) = case vereinfache formel of
     (Nicht formel') -> formel'
+    Wahr -> Falsch
+    Falsch -> Wahr
     formel' -> Nicht formel'
 vereinfache (Und lhs rhs) = case (vereinfache lhs, vereinfache rhs) of
     (Wahr, rhs) -> vereinfache rhs
