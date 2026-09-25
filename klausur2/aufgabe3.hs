@@ -30,18 +30,21 @@ variablen (Und lhs rhs) = variablen lhs ++ variablen rhs
 variablen (Oder lhs rhs) = variablen lhs ++ variablen rhs
 
 vereinfache :: Formel -> Formel
-vereinfache (Nicht (Nicht formel)) = vereinfache formel
-vereinfache (Und Wahr rhs) = vereinfache rhs
-vereinfache (Und lhs Wahr) = vereinfache lhs
-vereinfache (Und Falsch _) = Falsch
-vereinfache (Und _ Falsch) = Falsch
-vereinfache (Oder Falsch rhs) = vereinfache rhs
-vereinfache (Oder lhs Falsch) = vereinfache lhs
-vereinfache (Oder Wahr _) = Wahr
-vereinfache (Oder _ Wahr) = Wahr
 vereinfache Wahr = Wahr
 vereinfache Falsch = Falsch
 vereinfache (Var name) = Var name
-vereinfache (Nicht formel) = Nicht $ vereinfache formel
-vereinfache (Und lhs rhs) = Und (vereinfache lhs) (vereinfache rhs)
-vereinfache (Oder lhs rhs) = Oder (vereinfache lhs) (vereinfache rhs)
+vereinfache (Nicht formel) = case vereinfache formel of
+    (Nicht formel') -> formel'
+    formel' -> Nicht formel'
+vereinfache (Und lhs rhs) = case (vereinfache lhs, vereinfache rhs) of
+    (Wahr, rhs) -> vereinfache rhs
+    (lhs, Wahr) -> vereinfache lhs
+    (Falsch, _) -> Falsch
+    (_, Falsch) -> Falsch
+    (lhs', rhs') -> Und lhs' rhs'
+vereinfache (Oder lhs rhs) = case (vereinfache lhs, vereinfache rhs) of
+    (Falsch, rhs) -> vereinfache rhs
+    (lhs, Falsch) -> vereinfache lhs
+    (Wahr, _) -> Wahr
+    (_, Wahr) -> Wahr
+    (lhs', rhs') -> Oder lhs' rhs'
