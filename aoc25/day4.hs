@@ -27,11 +27,11 @@ notTooMuchPaper grid x y = length (filter (==Paper) (neighbors grid x y)) < 4
 indices :: Grid a -> [(Int, Int)]
 indices rows = concatMap (\(y, row) -> fmap (\(x, _) -> (x, y)) (zip [0..] row)) (zip [0..] rows)
 
-gridSpacesWithNotTooMuchPaper :: Grid Cell -> Int
-gridSpacesWithNotTooMuchPaper grid = length $ filter (\ (x, y) -> notTooMuchPaper grid x y && getXy grid x y == Just Paper) $ indices grid
+clearableSpaces :: Grid Cell -> Int
+clearableSpaces grid = length $ filter (\ (x, y) -> notTooMuchPaper grid x y && getXy grid x y == Just Paper) $ indices grid
 
 main :: IO ()
 main = do
     input <- readFile "day4.txt"
     let grid = parseGrid input
-    print $ fmap gridSpacesWithNotTooMuchPaper grid
+    print $ fmap clearableSpaces grid

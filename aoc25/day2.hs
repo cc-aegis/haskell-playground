@@ -7,12 +7,13 @@ digitsOfInt n
     | n < 10 = 1
     | otherwise = 1 + digitsOfInt (n `div` 10)
 
+factors :: Integer -> [Integer]
+factors max = filter ((== 0) . mod max) [1..max - 1]
+
 -- 2n-digit and divisible by (1+10^n) 
 isInvalidId :: Integer -> Bool
-isInvalidId n
-    | even digits = 0 == mod n (1 + 10 ^ (div digits 2))
-    | otherwise = False
-        where digits = digitsOfInt n
+isInvalidId n = any (\factor -> TODO) digitCountFactors
+    where digitCountFactors = factors $ digitsOfInt n
 
 invalidIdsInRange :: (Integer, Integer) -> [Integer]
 invalidIdsInRange (start, end)

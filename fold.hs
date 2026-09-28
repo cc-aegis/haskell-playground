@@ -19,7 +19,7 @@ foldr'' f i (x:xs) = f x (foldr'' f i xs)
 main :: IO ()
 main = do
     let nums = ["1", "2", "3"]
-    let join a b = "(" ++ a ++ ", " ++ b ++ ")"
+    let join a b = "(" ++ a ++ " * " ++ b ++ ")"
     print $ foldl join "b" nums
     print $ foldl' join "b" nums
     print $ foldl'' join "b" nums
